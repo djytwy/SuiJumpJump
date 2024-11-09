@@ -58,10 +58,24 @@ export class MainCtl extends Component {
         this.home_page.active = false;
         //开始游戏,状态为1
         this.logic_ctl?.run_game(1);
+        this.googleLogin()
     }
 
-    googleLogin(): void {
-
+    async googleLogin(): Promise<void> {
+        const res = await fetch('http://localhost:8080/getNonce', {
+            method: "GET"
+        })
+        const nonce = await res.text()
+        console.log(nonce);
+        const _params = new URLSearchParams({
+            client_id: '212832815906-nn4b53v63na7f4i31je7h9fbuiiuu9u2.apps.googleusercontent.com',
+            redirect_uri: `http://localhost:3000`,
+            response_type: "id_token",
+            scope: "openid email profile",
+            nonce: nonce
+        });
+        const loginURL = `https://accounts.google.com/o/oauth2/v2/auth?${_params}`;
+        window.open(loginURL)
     }
     /**
      * 自动开始游戏

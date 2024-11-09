@@ -1223,7 +1223,7 @@
   {
     "__type__": "cc.Node",
     "_name": "home_page",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 2
@@ -1281,7 +1281,7 @@
   {
     "__type__": "cc.Node",
     "_name": "bg",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 51
@@ -1423,7 +1423,7 @@
   {
     "__type__": "cc.Node",
     "_name": "game_name",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 51
@@ -1532,7 +1532,7 @@
   {
     "__type__": "cc.Node",
     "_name": "btn_start",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 51
@@ -1587,7 +1587,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 59
@@ -1674,7 +1674,7 @@
       "b": 0,
       "a": 255
     },
-    "_string": "开始游戏",
+    "_string": "Play",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 40,
@@ -1858,7 +1858,7 @@
   {
     "__type__": "cc.Node",
     "_name": "btn_rank",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 51
@@ -1913,7 +1913,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 67
@@ -3561,7 +3561,7 @@
   {
     "__type__": "cc.Node",
     "_name": "over_page",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 2
@@ -3628,7 +3628,7 @@
   {
     "__type__": "cc.Node",
     "_name": "bg",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 133
@@ -3770,7 +3770,7 @@
   {
     "__type__": "cc.Node",
     "_name": "title",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 133
@@ -3822,7 +3822,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 138
@@ -4015,7 +4015,7 @@
   {
     "__type__": "cc.Node",
     "_name": "total_score",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 133
@@ -4150,7 +4150,7 @@
   {
     "__type__": "cc.Node",
     "_name": "btn_restart",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 133
@@ -4205,7 +4205,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 147
@@ -4467,7 +4467,7 @@
   {
     "__type__": "cc.Node",
     "_name": "history_score",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 133
@@ -4519,7 +4519,7 @@
   {
     "__type__": "cc.Node",
     "_name": "history_value",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 155
@@ -4738,7 +4738,7 @@
   {
     "__type__": "cc.Node",
     "_name": "rank",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 133
@@ -4796,7 +4796,7 @@
   {
     "__type__": "cc.Node",
     "_name": "bg",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 161
@@ -4905,7 +4905,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 161
@@ -5037,7 +5037,7 @@
   {
     "__type__": "cc.Node",
     "_name": "btn_rank",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 161
@@ -5092,7 +5092,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 168
@@ -5348,7 +5348,7 @@
   {
     "__type__": "cc.Node",
     "_name": "rank_list",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 161
@@ -5403,7 +5403,7 @@
   {
     "__type__": "cc.Node",
     "_name": "ele_1",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 176
@@ -5461,7 +5461,7 @@
   {
     "__type__": "cc.Node",
     "_name": "order",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 177
@@ -5596,7 +5596,7 @@
   {
     "__type__": "cc.Node",
     "_name": "avater",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 177
@@ -5654,7 +5654,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Sprite",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 181
@@ -5763,7 +5763,7 @@
   {
     "__type__": "cc.Node",
     "_name": "b14",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 181
@@ -5950,7 +5950,7 @@
   {
     "__type__": "cc.Node",
     "_name": "nick_name",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 177
@@ -6082,7 +6082,7 @@
   {
     "__type__": "cc.Node",
     "_name": "score",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 177
@@ -6239,7 +6239,7 @@
   {
     "__type__": "cc.Node",
     "_name": "ele_2",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 176
@@ -6297,7 +6297,7 @@
   {
     "__type__": "cc.Node",
     "_name": "order",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 198
@@ -6432,7 +6432,7 @@
   {
     "__type__": "cc.Node",
     "_name": "avater",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 198
@@ -6490,7 +6490,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Sprite",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 202
@@ -6599,7 +6599,7 @@
   {
     "__type__": "cc.Node",
     "_name": "b14",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 202
@@ -6786,7 +6786,7 @@
   {
     "__type__": "cc.Node",
     "_name": "nick_name",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 198
@@ -6918,7 +6918,7 @@
   {
     "__type__": "cc.Node",
     "_name": "score",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 198
@@ -7075,7 +7075,7 @@
   {
     "__type__": "cc.Node",
     "_name": "ele_3",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 176
@@ -7133,7 +7133,7 @@
   {
     "__type__": "cc.Node",
     "_name": "order",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 219
@@ -7268,7 +7268,7 @@
   {
     "__type__": "cc.Node",
     "_name": "avater",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 219
@@ -7326,7 +7326,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Sprite",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 223
@@ -7435,7 +7435,7 @@
   {
     "__type__": "cc.Node",
     "_name": "b14",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 223
@@ -7622,7 +7622,7 @@
   {
     "__type__": "cc.Node",
     "_name": "nick_name",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 219
@@ -7754,7 +7754,7 @@
   {
     "__type__": "cc.Node",
     "_name": "score",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 219
