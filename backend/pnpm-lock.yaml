@@ -23,12 +23,18 @@ importers:
       express:
         specifier: ^4.21.1
         version: 4.21.1
+      graphql-request:
+        specifier: ^7.1.2
+        version: 7.1.2(graphql@16.9.0)
       jwt-decode:
         specifier: ^4.0.0
         version: 4.0.0
       redis:
         specifier: ^4.7.0
         version: 4.7.0
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
     devDependencies:
       '@types/cors':
         specifier: ^2.8.17
@@ -332,6 +338,11 @@ packages:
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
+
+  graphql-request@7.1.2:
+    resolution: {integrity: sha512-+XE3iuC55C2di5ZUrB4pjgwe+nIQBuXVIK9J98wrVwojzDW3GMdSBZfxUk8l4j9TieIpjpggclxhNEU9ebGF8w==}
+    peerDependencies:
+      graphql: 14 - 16
 
   graphql@16.9.0:
     resolution: {integrity: sha512-GGTKBX4SD7Wdb8mqeDLni2oaRGYQWjWHGKPQ24ZMnUtKfcsVoiv4uX8+LJr1K6U5VW2Lu1BwJnj7uiori0YtRw==}
@@ -871,6 +882,11 @@ snapshots:
       - '@gql.tada/svelte-support'
       - '@gql.tada/vue-support'
       - graphql
+
+  graphql-request@7.1.2(graphql@16.9.0):
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
+      graphql: 16.9.0
 
   graphql@16.9.0: {}
 

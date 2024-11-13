@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Label, macro } from 'cc';
+import { _decorator, Component, Node, Label, macro, Button } from 'cc';
 import { EventDispatcher } from './EventDispatcher';
 import { GameData } from './GameData';
 import { LogicCtl } from './LogicCtl';
@@ -22,6 +22,11 @@ export class MainCtl extends Component {
     @property({ type: Label })
     score_label: Label = null;
 
+    @property({ type: Node })
+    button_start: Node = null;
+
+    @property({ type: Node })
+    button_start_google: Node = null;
 
     start() {
         //设置homg page 显示在屏幕中间
@@ -32,6 +37,57 @@ export class MainCtl extends Component {
         EventDispatcher.get_instance().target.on(EventDispatcher.START_GAME, this.start_game, this);
         //延迟2秒执行自动跳
         this.schedule(this.auto_play, 2, macro.REPEAT_FOREVER, 2);
+        // this.initGoogle()
+    }
+
+    // 判断是否需要 Google 登录
+    async initGoogle() {
+        // @ts-ignore
+        // if (window.Telegram.WebApp) {
+        //     const nonceStr = window.localStorage.getItem('nonce')
+        //     if (nonceStr === null) {
+        //         this.button_start_google.active = true
+        //         this.button_start.active = false
+        //         // @ts-ignore
+        //         const nonce = window.Telegram.WebApp.initDataUnsafe.start_param as string;
+        //         if (nonce) {
+        //             const ex = new Date().getTime() + 1000 * 60 * 60 * 24 * 9
+        //             const _nonceStr = JSON.stringify({ nonce, ex })
+        //             window.localStorage.setItem('nonce', _nonceStr)
+        //         } else {
+
+        //         }
+        //     } else {
+        //         const nonceData = JSON.parse(nonceStr)
+        //         const now = new Date().getTime()
+        //         if (nonceData.ex <= now) {
+        //             window.localStorage.setItem('nonce', null)
+        //             this.button_start_google.active = true
+        //         }
+        //     }
+        // } else {
+
+        // }
+        this.button_start.active = false
+        this.button_start_google.active = true
+    }
+
+
+    // 获取 startApp 参数
+    async test() {
+        // @ts-ignore
+        const nonce = window.Telegram.WebApp.initDataUnsafe.start_param as string;
+        if (nonce) {
+            const res = await fetch('http://localhost:8080/test', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nonce })
+            })
+            const tx = await res.json()
+            console.log(tx.digest);
+        }
     }
 
     update(deltaTime: number) {
@@ -75,6 +131,9 @@ export class MainCtl extends Component {
             nonce: nonce
         });
         const loginURL = `https://accounts.google.com/o/oauth2/v2/auth?${_params}`;
+        // @ts-ignore  for tg:
+        // window.Telegram.WebApp.openLink(loginURL);
+        // for dev:
         window.open(loginURL)
     }
     /**
