@@ -35,13 +35,12 @@ export class Home extends Component {
         this.button_buy_bronze_ticket.active = false;
         this.button_close.active = false;
         // @ts-ignore
-        // const startParams = window.Telegram.WebApp.initDataUnsafe.start_param as string;
-        const startParams = ''
+        const startParams = window.Telegram.WebApp.initDataUnsafe.start_param as string;
         // const startParams = ''
         let startGmail = null;
         let startEx = null;
         if (startParams) {
-            const res = await fetch(`http://test-game.degentest.com/getGoogle?key=${startParams ?? ''}`)
+            const res = await fetch(`https://test-game.degentest.com/getGoogle?key=${startParams ?? ''}`)
             const resJson = await res.json();
             startGmail = resJson.str.split('_')[0]
             startEx = decodeURI(resJson.str.split('_')[1])
@@ -56,7 +55,7 @@ export class Home extends Component {
             const _startEx = new Date(startEx).getTime()
             if (now < _exTime || now < _startEx) {
                 // check SBT 
-                const res = await fetch(`http://test-game.degentest.com/hasSBT?email=${startGmail ?? gmail}`)
+                const res = await fetch(`https://test-game.degentest.com/hasSBT?email=${startGmail ?? gmail}`)
                 const resJson = await res.json();
                 if (resJson.hasSBT) {
                     // set to localStorage when user first enter game
@@ -87,7 +86,7 @@ export class Home extends Component {
     }
 
     async googleBtnClk(): Promise<void> {
-        const res = await fetch('http://test-game.degentest.com/getNonce', {
+        const res = await fetch('https://test-game.degentest.com/getNonce', {
             method: "GET"
         })
         const nonce = await res.text()
@@ -100,9 +99,9 @@ export class Home extends Component {
         });
         const loginURL = `https://accounts.google.com/o/oauth2/v2/auth?${_params}`;
         // @ts-ignore  for tg:
-        // window.Telegram.WebApp.openLink(loginURL);
+        window.Telegram.WebApp.openLink(loginURL);
         // for dev:
-        window.open(loginURL)
+        // window.open(loginURL)
         this.button_start_google.active = false;
         this.button_start_free.active = true;
         this.button_start_pvp.active = true;

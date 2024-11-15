@@ -26,7 +26,7 @@ export class FreePageCtl extends Component {
         const level = window.localStorage.getItem("level")
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://test-game.degentest.com/uploadToRank', {
+            const res = await fetch('https://test-game.degentest.com/uploadToRank', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',

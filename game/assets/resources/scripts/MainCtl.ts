@@ -103,7 +103,7 @@ export class MainCtl extends Component {
     async start_game_gold(): Promise<void> {
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://test-game.degentest.com/buyTicket', {
+            const res = await fetch('https://test-game.degentest.com/buyTicket', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -142,7 +142,7 @@ export class MainCtl extends Component {
     async start_game_sliver(): Promise<void> {
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://test-game.degentest.com/buyTicket', {
+            const res = await fetch('https://test-game.degentest.com/buyTicket', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -181,7 +181,7 @@ export class MainCtl extends Component {
     async start_game_bronze(): Promise<void> {
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://test-game.degentest.com/buyTicket', {
+            const res = await fetch('https://test-game.degentest.com/buyTicket', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
