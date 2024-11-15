@@ -21,12 +21,9 @@ export class MainCtl extends Component {
     //本局得分
     @property({ type: Label })
     score_label: Label = null;
-
-    @property({ type: Node })
-    button_start: Node = null;
-
-    @property({ type: Node })
-    button_start_google: Node = null;
+    // ticket on sui chain
+    @property({ type: Label })
+    ticket: Label = null;
 
     start() {
         //设置homg page 显示在屏幕中间
@@ -37,57 +34,6 @@ export class MainCtl extends Component {
         EventDispatcher.get_instance().target.on(EventDispatcher.START_GAME, this.start_game, this);
         //延迟2秒执行自动跳
         this.schedule(this.auto_play, 2, macro.REPEAT_FOREVER, 2);
-        // this.initGoogle()
-    }
-
-    // 判断是否需要 Google 登录
-    async initGoogle() {
-        // @ts-ignore
-        // if (window.Telegram.WebApp) {
-        //     const nonceStr = window.localStorage.getItem('nonce')
-        //     if (nonceStr === null) {
-        //         this.button_start_google.active = true
-        //         this.button_start.active = false
-        //         // @ts-ignore
-        //         const nonce = window.Telegram.WebApp.initDataUnsafe.start_param as string;
-        //         if (nonce) {
-        //             const ex = new Date().getTime() + 1000 * 60 * 60 * 24 * 9
-        //             const _nonceStr = JSON.stringify({ nonce, ex })
-        //             window.localStorage.setItem('nonce', _nonceStr)
-        //         } else {
-
-        //         }
-        //     } else {
-        //         const nonceData = JSON.parse(nonceStr)
-        //         const now = new Date().getTime()
-        //         if (nonceData.ex <= now) {
-        //             window.localStorage.setItem('nonce', null)
-        //             this.button_start_google.active = true
-        //         }
-        //     }
-        // } else {
-
-        // }
-        this.button_start.active = false
-        this.button_start_google.active = true
-    }
-
-
-    // 获取 startApp 参数
-    async test() {
-        // @ts-ignore
-        const nonce = window.Telegram.WebApp.initDataUnsafe.start_param as string;
-        if (nonce) {
-            const res = await fetch('http://localhost:8080/test', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ nonce })
-            })
-            const tx = await res.json()
-            console.log(tx.digest);
-        }
     }
 
     update(deltaTime: number) {
@@ -114,28 +60,145 @@ export class MainCtl extends Component {
         this.home_page.active = false;
         //开始游戏,状态为1
         this.logic_ctl?.run_game(1);
-        this.googleLogin()
     }
 
-    async googleLogin(): Promise<void> {
-        const res = await fetch('http://localhost:8080/getNonce', {
-            method: "GET"
-        })
-        const nonce = await res.text()
-        console.log(nonce);
-        const _params = new URLSearchParams({
-            client_id: '212832815906-nn4b53v63na7f4i31je7h9fbuiiuu9u2.apps.googleusercontent.com',
-            redirect_uri: `http://localhost:3000`,
-            response_type: "id_token",
-            scope: "openid email profile",
-            nonce: nonce
-        });
-        const loginURL = `https://accounts.google.com/o/oauth2/v2/auth?${_params}`;
-        // @ts-ignore  for tg:
-        // window.Telegram.WebApp.openLink(loginURL);
-        // for dev:
-        window.open(loginURL)
+    start_game_free(): void {
+        this.unschedule(this.auto_play);
+        //设置默认本局得分0
+        this.score_label.string = "" + 0;
+        //重置游戏数据,游戏状态
+        GameData.reset_data();
+        //移动和隐藏,home page
+        this.home_page.setPosition(-1000, 0);
+        this.home_page.active = false;
+        //开始游戏,状态为1
+        this.logic_ctl?.run_game(1);
+        window.localStorage.setItem("level", 'free')
     }
+
+    copy_ticket() {
+        const ticket = window.localStorage.getItem("ticket")
+        navigator.clipboard.writeText(ticket).then(() => {
+            console.log('Copy success: ', ticket);
+        }).catch(err => {
+            console.error('error: ', err);
+        });
+    }
+
+    async start_game_gold(): Promise<void> {
+        const gmail = window.localStorage.getItem("gmail")
+        try {
+            const res = await fetch('http://localhost:8080/buyTicket', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({
+                    "email": gmail,
+                    "level": "gold"
+                }),
+            })
+            const data = await res.json()
+            if (data.digest) {
+                const l = data.digest
+                this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
+                window.localStorage.setItem('ticket', data.digest)
+                this.unschedule(this.auto_play);
+                //设置默认本局得分0
+                this.score_label.string = "" + 0;
+                //重置游戏数据,游戏状态
+                GameData.reset_data();
+                //移动和隐藏,home page
+                this.home_page.setPosition(-1000, 0);
+                this.home_page.active = false;
+                //开始游戏,状态为1
+                this.logic_ctl?.run_game(1);
+                window.localStorage.setItem("level", 'gold')
+                window.localStorage.setItem("address", data.address)
+            } else {
+                console.log(data);
+            }
+        } catch (error) {
+            console.log();
+        }
+    }
+
+    async start_game_sliver(): Promise<void> {
+        const gmail = window.localStorage.getItem("gmail")
+        try {
+            const res = await fetch('http://localhost:8080/buyTicket', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({
+                    "email": gmail,
+                    "level": "sliver"
+                }),
+            })
+            const data = await res.json()
+            if (data.digest) {
+                const l = data.digest
+                this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
+                window.localStorage.setItem('ticket', data.digest)
+                this.unschedule(this.auto_play);
+                //设置默认本局得分0
+                this.score_label.string = "" + 0;
+                //重置游戏数据,游戏状态
+                GameData.reset_data();
+                //移动和隐藏,home page
+                this.home_page.setPosition(-1000, 0);
+                this.home_page.active = false;
+                //开始游戏,状态为1
+                this.logic_ctl?.run_game(1);
+                window.localStorage.setItem("level", 'sliver')
+                window.localStorage.setItem("address", data.address)
+            } else {
+                console.log(data);
+            }
+        } catch (error) {
+            console.log(error.toString());
+        }
+    }
+
+    async start_game_bronze(): Promise<void> {
+        const gmail = window.localStorage.getItem("gmail")
+        try {
+            const res = await fetch('http://localhost:8080/buyTicket', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+                body: JSON.stringify({
+                    "email": gmail,
+                    "level": "bronze"
+                }),
+            })
+            const data = await res.json()
+            if (data.digest) {
+                const l = data.digest
+                this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
+                window.localStorage.setItem('ticket', data.digest)
+                this.unschedule(this.auto_play);
+                //设置默认本局得分0
+                this.score_label.string = "" + 0;
+                //重置游戏数据,游戏状态
+                GameData.reset_data();
+                //移动和隐藏,home page
+                this.home_page.setPosition(-1000, 0);
+                this.home_page.active = false;
+                //开始游戏,状态为1
+                this.logic_ctl?.run_game(1);
+                window.localStorage.setItem("level", 'bronze')
+                window.localStorage.setItem("address", data.address)
+            } else {
+                console.log(data);
+            }
+        } catch (error) {
+            console.log(error.toString());
+        }
+    }
+
     /**
      * 自动开始游戏
      */

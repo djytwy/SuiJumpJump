@@ -103,7 +103,7 @@ export class LogicCtl extends Component {
                                 break;
                             case 0:
                                 this.hero_ctl.miss(this.box_arr[this.box_arr.length - 1].node
-                                    ,this.box_arr[this.box_arr.length - 2].node);
+                                    , this.box_arr[this.box_arr.length - 2].node);
                                 break;
                         }
                         //计算真实得分
@@ -125,8 +125,15 @@ export class LogicCtl extends Component {
                             //设置状态为1,解锁触控
                             GameData.set_game_state(1);
                         } else {
-                            //发送游戏结束事件,用以打开over_page面板
-                            EventDispatcher.get_instance().target.emit(EventDispatcher.SHOW_OVER_WINDOW);
+                            // level 分为 : gold sliver bronze free 四种
+                            const level = window.localStorage.getItem("level")
+                            if (level === "free") {
+                                //发送游戏结束事件,用以打开over_page面板 free
+                                EventDispatcher.get_instance().target.emit(EventDispatcher.SHOW_OVER_WINDOW_FREE);
+                            } else {
+                                //发送游戏结束事件,用以打开over_page面板 pvp
+                                EventDispatcher.get_instance().target.emit(EventDispatcher.SHOW_OVER_WINDOW_PVP);
+                            }
                             //游戏状态设置为4(游戏结束)
                             GameData.set_game_state(4);
                         }
@@ -136,17 +143,24 @@ export class LogicCtl extends Component {
                     this.sound_ctl.play_score(score);
                     //执行踏空动画
                     this.hero_ctl.miss(this.box_arr[this.box_arr.length - 1].node
-                        ,this.box_arr[this.box_arr.length - 2].node);
-                        //发送游戏结束事件,用以打开over_page面板
-                     EventDispatcher.get_instance().target.emit(EventDispatcher.SHOW_OVER_WINDOW);
-                      //游戏状态设置为4(游戏结束)
-                     GameData.set_game_state(4);
+                        , this.box_arr[this.box_arr.length - 2].node);
+                    // level 分为 : gold sliver bronze free 四种
+                    const level = window.localStorage.getItem("level")
+                    if (level === "free") {
+                        //发送游戏结束事件,用以打开over_page面板 free
+                        EventDispatcher.get_instance().target.emit(EventDispatcher.SHOW_OVER_WINDOW_FREE);
+                    } else {
+                        //发送游戏结束事件,用以打开over_page面板 pvp
+                        EventDispatcher.get_instance().target.emit(EventDispatcher.SHOW_OVER_WINDOW_PVP);
+                    }
+                    //游戏状态设置为4(游戏结束)
+                    GameData.set_game_state(4);
                 }
                 //清理不需要显示的箱子
                 this.step_clear();
             });
     }
-    
+
 
     /**
      * 产生新的箱子
@@ -188,7 +202,7 @@ export class LogicCtl extends Component {
         //根据目标点坐标,计算出来差值
         let pos: Vec3 = this.light_house.getPosition().subtract(canvas_position);
         //执行移动动画
-        tween(this.node).by(0.5, { position: new Vec3(pos.x, pos.y) }).start(); 
+        tween(this.node).by(0.5, { position: new Vec3(pos.x, pos.y) }).start();
         // this.hero_ctl.set_sibling(this.node.children.length);
     }
 
@@ -215,7 +229,7 @@ export class LogicCtl extends Component {
      */
     clear_all() {
         this.node.removeAllChildren();
-        this.box_arr.splice(0,this.box_arr.length);
+        this.box_arr.splice(0, this.box_arr.length);
     }
 
     /**
@@ -236,11 +250,11 @@ export class LogicCtl extends Component {
      * 初始化游戏
      * @param game_state 状态,1,-1
      */
-    run_game(game_state:number) {
+    run_game(game_state: number) {
         //状态设置
         GameData.set_game_state(game_state);
         //logic_layer 给与默认位置0,0
-        this.node.setPosition(0,0);
+        this.node.setPosition(0, 0);
         //清理全部子节点
         this.clear_all();
         //创建2个箱子
@@ -257,9 +271,9 @@ export class LogicCtl extends Component {
      * 自动跳跃
      * @returns 
      */
-    auto_jump(){
+    auto_jump() {
         //合法性判断
-        if(GameData.get_game_state()!=-1){
+        if (GameData.get_game_state() != -1) {
             return;
         }
         //重置英雄的欧拉角
@@ -267,12 +281,12 @@ export class LogicCtl extends Component {
         //获取英雄坐标
         let pos_hero = this.hero_ctl.node.getPosition();
         //获取目标箱子坐标
-        let pos_box = this.box_arr[this.box_arr.length -1].get_jump_position().subtract(pos_hero).normalize();
+        let pos_box = this.box_arr[this.box_arr.length - 1].get_jump_position().subtract(pos_hero).normalize();
         //执行跳跃
         this.hero_ctl.jump_by_postion(
-            this.box_arr[this.box_arr.length -1].get_jump_position(),pos_box.x,()=>{
-                 //合法性判断
-                if(GameData.get_game_state()!=-1){
+            this.box_arr[this.box_arr.length - 1].get_jump_position(), pos_box.x, () => {
+                //合法性判断
+                if (GameData.get_game_state() != -1) {
                     return;
                 }
                 //跳跃完毕后,产生新的箱子
@@ -288,13 +302,13 @@ export class LogicCtl extends Component {
 
     /**
      * 清理不需要渲染的箱子,用于提高性能(draw call)
-     */    
-    step_clear(){
+     */
+    step_clear() {
         //默认只留5个箱子,其他的都remove掉
-        while(this.box_arr.length>5){
+        while (this.box_arr.length > 5) {
             //从数组前面弹出来一个
             let box = this.box_arr.shift();
-            if(box){
+            if (box) {
                 box.node.removeFromParent();
             }
         }

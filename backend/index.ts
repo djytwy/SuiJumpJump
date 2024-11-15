@@ -262,7 +262,8 @@ app.post('/buyTicket', async (req, res) => {
             res.json({
                 success: true,
                 digest: executeRes.digest,
-                ticketLevel: level
+                ticketLevel: level,
+                address: data.address
             })
         } else {
             res.json({
@@ -390,7 +391,7 @@ app.post('/addRecordToSBT', async (req, res) => {
             const date = new Date();
             const formattedDate = new Intl.DateTimeFormat('en-US').format(date);
             const data = JSON.parse(nonceString ?? "")
-            const objectId = await fetchObjectId(data.address, `0x63d3ab702b5e022789c272efba8a7e82936ec867bddbcc1ecc7b0720afa86ef4::SuiJumpJump::SBT`)
+            const objectId = await fetchObjectId(data.address, `${packageID}::SuiJumpJump::SBT`)
             const ephemeralKeyPair = Ed25519Keypair.fromSecretKey(
                 data.privateKey
             );
@@ -505,6 +506,54 @@ app.get('/t_redis', async (req, res) => {
     const strData = await redisClient.lRange('t', 0, -1);
     console.log(strData);
     res.send('success!')
+})
+
+app.get('/get_list', async (req, res) => {
+    const level = req.query.level;
+    const date = new Date().toISOString().split('T')[0];
+    const rkey = `${date}-${level}Rank`
+    const listData = await redisClient.lRange(rkey, 0, -1);
+    console.log('rkey:', rkey);
+    console.log(listData);
+    const JsonList = listData.map(str => {
+        // 替换键名的格式
+        const jsonString = str.replace(/(\w+):/g, '"$1":').replace(/'/g, '"').replace(/ss": /g, 'ss": "').replace(/,/g, '",');
+        return JSON.parse(jsonString);
+    })
+    // @ts-ignore
+    JsonList.sort((obj1, obj2) => obj2.points - obj1.points);
+    console.log(JsonList);
+    if (JsonList.length > 15) {
+        const rankList = JsonList.slice(0, 15)
+        res.json({
+            data: rankList
+        })
+    } else {
+        res.json({
+            data: JsonList
+        })
+    }
+})
+
+
+app.get('/hasSBT', async (req, res) => {
+    const email = req.query.email as string;
+    console.log('email', email);
+
+    const userDataString = await redisClient.get(email)
+    console.log('userDataString', userDataString);
+
+    const userData = JSON.parse(userDataString)
+    const objectId = await fetchObjectId(userData.address, `${packageID}::SuiJumpJump::SBT`)
+    if (objectId) {
+        res.json({
+            hasSBT: true
+        })
+    } else {
+        res.json({
+            hasSBT: false
+        })
+    }
 })
 
 // 启动服务器并监听指定端口

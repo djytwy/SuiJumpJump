@@ -11,25 +11,29 @@ export class EventDispatcher {
     /**
      * 单利对象
      */
-    private static instance :EventDispatcher;
+    private static instance: EventDispatcher;
     /**
      * 更新面板分数
      */
-    static UPDATE_SCORE_LABEL:string = "UPDATE_SCORE_LABEL";
+    static UPDATE_SCORE_LABEL: string = "UPDATE_SCORE_LABEL";
     /**
-     * 打开游戏结束界面
+     * 打开游戏结束界面 PVP
      */
-    static SHOW_OVER_WINDOW:string = "SHOW_OVER_WINDOW";
+    static SHOW_OVER_WINDOW_PVP: string = "SHOW_OVER_WINDOW_PVP";
+    /**
+     * 打开游戏结束界面 FREE
+     */
+    static SHOW_OVER_WINDOW_FREE: string = "SHOW_OVER_WINDOW_FREE";
     /**
      * 开始游戏(在玩一次)
      */
-    static START_GAME:string = "START_GAME";
+    static START_GAME: string = "START_GAME";
     /**
      * 获取单利
      * @returns 
      */
-    static get_instance():EventDispatcher{
-        if(!EventDispatcher.instance){
+    static get_instance(): EventDispatcher {
+        if (!EventDispatcher.instance) {
             EventDispatcher.instance = new EventDispatcher();
         }
         return EventDispatcher.instance;
@@ -37,11 +41,8 @@ export class EventDispatcher {
     /**
      * 获取event
      */
-    get target():EventTarget{
+    get target(): EventTarget {
         return event_target;
     }
-
-
-
 }
 
