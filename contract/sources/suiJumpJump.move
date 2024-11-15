@@ -10,7 +10,7 @@ module suiJumpJump::SuiJumpJump {
     public struct SBT has key, store {
         id: UID,
         name: String,
-        image_base64: String,
+        image: String,
         records: vector<String>,
     }
 
@@ -30,15 +30,15 @@ module suiJumpJump::SuiJumpJump {
     }
 
     public fun avatar (nft: &SBT): String {
-        nft.image_base64
+        nft.image
     }
 
-    public fun set_avatar (nft: &mut SBT, image_base64: String) {
-        nft.image_base64 = image_base64;
+    public fun set_avatar (nft: &mut SBT, image: String) {
+        nft.image = image;
     }
 
     public fun destroy(nft: SBT) {
-        let SBT { id, image_base64: _, name: _, records: _ } = nft;
+        let SBT { id, image: _, name: _, records: _ } = nft;
         id.delete()
     }
 
@@ -50,7 +50,7 @@ module suiJumpJump::SuiJumpJump {
     public entry fun mint_sbt(
         name: String, 
         records: vector<String>, 
-        image_base64: String,
+        image: String,
         ctx: &mut TxContext
     ) {
         let id = object::new(ctx);
@@ -63,7 +63,7 @@ module suiJumpJump::SuiJumpJump {
         let usr = SBT {
             id,
             name,
-            image_base64,
+            image,
             records
         };
         let sender = tx_context::sender(ctx);

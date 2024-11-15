@@ -36,10 +36,18 @@ export class Home extends Component {
         this.button_close.active = false;
         // @ts-ignore
         // const startParams = window.Telegram.WebApp.initDataUnsafe.start_param as string;
-        const startParams = 'djytwy@gmail.com_2024-11-20 14:40:38'
+        const startParams = ''
         // const startParams = ''
-        const startGmail = startParams.split('_')[0]
-        const startEx = startParams.split('_')[1]
+        let startGmail = null;
+        let startEx = null;
+        if (startParams) {
+            const res = await fetch(`http://test-game.degentest.com/getGoogle?key=${startParams ?? ''}`)
+            const resJson = await res.json();
+            startGmail = resJson.str.split('_')[0]
+            startEx = decodeURI(resJson.str.split('_')[1])
+            const _address = resJson.str.split('_')[2]
+            window.localStorage.setItem('address', _address)
+        }
         const gmail = window.localStorage.getItem("gmail")
         const exTime = window.localStorage.getItem("exTime")
         const now = new Date().getTime()
@@ -48,7 +56,7 @@ export class Home extends Component {
             const _startEx = new Date(startEx).getTime()
             if (now < _exTime || now < _startEx) {
                 // check SBT 
-                const res = await fetch(`http://localhost:8080/hasSBT?email=${startGmail ?? gmail}`)
+                const res = await fetch(`http://test-game.degentest.com/hasSBT?email=${startGmail ?? gmail}`)
                 const resJson = await res.json();
                 if (resJson.hasSBT) {
                     // set to localStorage when user first enter game
@@ -79,7 +87,7 @@ export class Home extends Component {
     }
 
     async googleBtnClk(): Promise<void> {
-        const res = await fetch('http://localhost:8080/getNonce', {
+        const res = await fetch('http://test-game.degentest.com/getNonce', {
             method: "GET"
         })
         const nonce = await res.text()

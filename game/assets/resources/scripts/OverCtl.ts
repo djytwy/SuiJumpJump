@@ -55,7 +55,7 @@ export class OverCtl extends Component {
         const level = window.localStorage.getItem("level")
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://localhost:8080/uploadToRank', {
+            const res = await fetch('http://test-game.degentest.com/uploadToRank', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -80,7 +80,7 @@ export class OverCtl extends Component {
     async addRecordToSBT() {
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://localhost:8080/addRecordToSBT', {
+            const res = await fetch('http://test-game.degentest.com/addRecordToSBT', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',

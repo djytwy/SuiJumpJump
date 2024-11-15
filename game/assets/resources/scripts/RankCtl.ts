@@ -30,7 +30,7 @@ export class RankCtl extends Component {
     async getRankList(): Promise<Array<{ address: string, points: number }>> {
         try {
             const level = window.localStorage.getItem("level")
-            const res = await fetch(`http://localhost:8080/get_list?level=${level}`)
+            const res = await fetch(`http://test-game.degentest.com/get_list?level=${level}`)
             const res_json: { data: Array<{ address: string, points: number }> } = await res.json()
             return res_json.data
         } catch (error) {

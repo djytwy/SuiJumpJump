@@ -24,6 +24,8 @@ export class MainCtl extends Component {
     // ticket on sui chain
     @property({ type: Label })
     ticket: Label = null;
+    @property({ type: Label })
+    address: Label = null;
 
     start() {
         //设置homg page 显示在屏幕中间
@@ -74,6 +76,10 @@ export class MainCtl extends Component {
         //开始游戏,状态为1
         this.logic_ctl?.run_game(1);
         window.localStorage.setItem("level", 'free')
+        const _address = window.localStorage.getItem("address")
+        if (_address) {
+            this.address.string = _address
+        }
     }
 
     copy_ticket() {
@@ -85,10 +91,19 @@ export class MainCtl extends Component {
         });
     }
 
+    copy_address() {
+        const ticket = window.localStorage.getItem("address")
+        navigator.clipboard.writeText(ticket).then(() => {
+            console.log('Copy success: ', ticket);
+        }).catch(err => {
+            console.error('error: ', err);
+        });
+    }
+
     async start_game_gold(): Promise<void> {
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://localhost:8080/buyTicket', {
+            const res = await fetch('http://test-game.degentest.com/buyTicket', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -100,6 +115,7 @@ export class MainCtl extends Component {
             })
             const data = await res.json()
             if (data.digest) {
+                this.address.string = data.address;
                 const l = data.digest
                 this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
                 window.localStorage.setItem('ticket', data.digest)
@@ -126,7 +142,7 @@ export class MainCtl extends Component {
     async start_game_sliver(): Promise<void> {
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://localhost:8080/buyTicket', {
+            const res = await fetch('http://test-game.degentest.com/buyTicket', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -138,6 +154,7 @@ export class MainCtl extends Component {
             })
             const data = await res.json()
             if (data.digest) {
+                this.address.string = data.address;
                 const l = data.digest
                 this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
                 window.localStorage.setItem('ticket', data.digest)
@@ -164,7 +181,7 @@ export class MainCtl extends Component {
     async start_game_bronze(): Promise<void> {
         const gmail = window.localStorage.getItem("gmail")
         try {
-            const res = await fetch('http://localhost:8080/buyTicket', {
+            const res = await fetch('http://test-game.degentest.com/buyTicket', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -176,6 +193,7 @@ export class MainCtl extends Component {
             })
             const data = await res.json()
             if (data.digest) {
+                this.address.string = data.address;
                 const l = data.digest
                 this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
                 window.localStorage.setItem('ticket', data.digest)
