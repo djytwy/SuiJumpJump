@@ -28,12 +28,16 @@ export class Home extends Component {
     @property({ type: Node })
     init_user_message_page: Node = null;
 
+    @property({ type: Label })
+    zk_login_tips: Label = null
+
     async start(): Promise<void> {
         this.init_user_message_page.active = false;
         this.button_buy_sliver_ticket.active = false;
         this.button_buy_gold_ticket.active = false;
         this.button_buy_bronze_ticket.active = false;
         this.button_close.active = false;
+        this.zk_login_tips.string = 'Play wit google';
         // @ts-ignore
         const startParams = window.Telegram.WebApp.initDataUnsafe.start_param as string;
         // const startParams = ''
@@ -102,9 +106,11 @@ export class Home extends Component {
         window.Telegram.WebApp.openLink(loginURL);
         // for dev:
         // window.open(loginURL)
-        this.button_start_google.active = false;
-        this.button_start_free.active = true;
-        this.button_start_pvp.active = true;
+        // this.button_start_google.active = false;
+        // this.button_start_free.active = true;
+        // this.button_start_pvp.active = true;
+        this.zk_login_tips.fontSize = 20
+        this.zk_login_tips.string = "Try again with google"
     }
 
     freeBtnClk() {

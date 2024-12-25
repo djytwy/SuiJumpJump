@@ -26,6 +26,10 @@ export class MainCtl extends Component {
     ticket: Label = null;
     @property({ type: Label })
     address: Label = null;
+    @property({ type: Label })
+    ticket_level: Label = null;
+    @property({ type: Label })
+    pool_balance: Label = null;
 
     start() {
         //设置homg page 显示在屏幕中间
@@ -36,6 +40,8 @@ export class MainCtl extends Component {
         EventDispatcher.get_instance().target.on(EventDispatcher.START_GAME, this.start_game, this);
         //延迟2秒执行自动跳
         this.schedule(this.auto_play, 2, macro.REPEAT_FOREVER, 2);
+        this.pool_balance.string = '',
+            this.ticket_level.string = ""
     }
 
     update(deltaTime: number) {
@@ -78,8 +84,11 @@ export class MainCtl extends Component {
         window.localStorage.setItem("level", 'free')
         const _address = window.localStorage.getItem("address")
         if (_address) {
-            this.address.string = _address
+            this.address.string = `address: ${_address.slice(0, 5)}...${_address.slice(_address.length - 5, _address.length)}`
         }
+        this.ticket.string = 'Free mode'
+        this.pool_balance.string = '',
+            this.ticket_level.string = ""
     }
 
     copy_ticket() {
@@ -113,9 +122,13 @@ export class MainCtl extends Component {
                     "level": "gold"
                 }),
             })
+            const pool_balance_res = await fetch('https://test-game.degentest.com/getGoldPoolBalance')
+            const pool_balance = await pool_balance_res.json()
+            this.pool_balance.string = pool_balance.balance + " SUI",
+                this.ticket_level.string = "Gold"
             const data = await res.json()
             if (data.digest) {
-                this.address.string = data.address;
+                this.address.string = `address: ${data.address.slice(0, 5)}...${data.address.slice(data.address.length - 5, data.address.length)}`
                 const l = data.digest
                 this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
                 window.localStorage.setItem('ticket', data.digest)
@@ -153,8 +166,12 @@ export class MainCtl extends Component {
                 }),
             })
             const data = await res.json()
+            const pool_balance_res = await fetch('https://test-game.degentest.com/getSliverPoolBalance')
+            const pool_balance = await pool_balance_res.json()
+            this.pool_balance.string = pool_balance.balance + " SUI",
+                this.ticket_level.string = "Sliver"
             if (data.digest) {
-                this.address.string = data.address;
+                this.address.string = `address: ${data.address.slice(0, 5)}...${data.address.slice(data.address.length - 5, data.address.length)}`
                 const l = data.digest
                 this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
                 window.localStorage.setItem('ticket', data.digest)
@@ -192,8 +209,12 @@ export class MainCtl extends Component {
                 }),
             })
             const data = await res.json()
+            const pool_balance_res = await fetch('https://test-game.degentest.com/getBronzePoolBalance')
+            const pool_balance = await pool_balance_res.json()
+            this.pool_balance.string = pool_balance.balance + " SUI",
+                this.ticket_level.string = "Bronze"
             if (data.digest) {
-                this.address.string = data.address;
+                this.address.string = `address: ${data.address.slice(0, 5)}...${data.address.slice(data.address.length - 5, data.address.length)}`
                 const l = data.digest
                 this.ticket.string = `Your ticket: ${data.digest.slice(0, 5)}...${data.digest.slice(l - 5, l)}`
                 window.localStorage.setItem('ticket', data.digest)
