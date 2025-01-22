@@ -50,7 +50,7 @@ public entry fun add_record(nft: &mut SBT, record: String) {
 }
 
 // SBT
-public entry fun mint_sbt(
+entry fun mint_sbt(
     config: &GlobalConfig,
     name: String, 
     records: vector<String>, 

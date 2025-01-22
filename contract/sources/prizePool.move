@@ -73,35 +73,42 @@ public(package) fun getBonus (pool: &mut PrizePool, amount: u64, ctx: &mut TxCon
     _sui
 }
 
+// distributePrizeList: the percet list of every player.
+// distributeList: the address of every player.
 
-// public entry fun distributeRank(
-//     _: &AutherizeCap, 
-//     pool: &mut PrizePool, 
-//     _rankNum: u64,
-//     recipients: vector<address>,
-//     ctx: &mut TxContext
-// ){
-//     let mut i = 0;
-//     let rewards_list : vector<u64> = vector[300,200,100,75,45,36,36,36,36,36];
-//     let num_transfers = recipients.length();
-//     let _sumAmount = balance::value(&pool.sui);
-//     while (i < num_transfers) {
-//         if (_rankNum == 0) {
-//             let percentage = *vector::borrow(&rewards_list, i);
-//             let recipient = *vector::borrow(&recipients, i);
-//             let _amount: u64 = _sumAmount *  percentage / 1000;
-//             pool.balance = pool.balance - _amount;
-//             let withdral_amount = balance::split(&mut pool.sui, _amount);
-//             assert!(_amount <= balance::value(&pool.sui), PoolDontHaveEnoughToken);
-//             transfer::public_transfer(coin::from_balance(withdral_amount, ctx), recipient);
-//         } else {
-//             let _amount: u64 = (_sumAmount / _rankNum) * 90 / 100;
-//             pool.balance = pool.balance - _amount;
-//             let recipient = *vector::borrow(&recipients, i);
-//             assert!(_amount <= balance::value(&pool.sui), PoolDontHaveEnoughToken);
-//             let withdral_amount = balance::split(&mut pool.sui, _amount);
-//             transfer::public_transfer(coin::from_balance(withdral_amount, ctx), recipient);
-//         };
-//         i = i + 1;
-//     };
-// }
+public(package) fun distributeRank ( distributeList: vector<address>, distributePrizeList: vector<u64>, _prizePool: &mut PrizePool, ctx: &mut TxContext) {
+    let mut distributeIndex = 0;
+    let distributeLength = distributeList.length();
+    let mut distributeAmount: vector<u64> = vector[];
+    while (distributeIndex < distributeLength) {
+        let _amount = *vector::borrow(&distributePrizeList, distributeIndex);
+        let _poolBalance = _prizePool.balance.value();
+        distributeAmount.push_back( _poolBalance * _amount / 1000 );
+        distributeIndex = distributeIndex + 1;
+    };
+    distributeIndex = 0;
+    while (distributeIndex < distributeLength) {
+        let _amount = *vector::borrow(&distributeAmount, distributeIndex);
+        let _distrbuteAmount = balance::split(&mut _prizePool.balance, _amount);
+        let _coin = coin::from_balance<SUI>(_distrbuteAmount, ctx);
+        let recipient = *vector::borrow(&distributeList, distributeIndex);
+        transfer::public_transfer(_coin, recipient);
+        distributeIndex = distributeIndex + 1;
+    }
+}
+
+// if player is not enough 10 distribute average 10% is revenue
+public(package) fun distributeEvery (distributeList: vector<address>, _prizePool: &mut PrizePool, ctx: &mut TxContext) {
+    let mut distributeIndex = 0;
+    let distributeLength = distributeList.length();
+    let _sumBalance = _prizePool.balance.value();
+    let _distributeAmount = (_sumBalance / distributeLength) * 90 / 100;
+    while (distributeIndex < distributeLength) {
+        let __distrbuteAmount = _prizePool.balance.split(_distributeAmount);
+        let _coin = coin::from_balance<SUI>(__distrbuteAmount, ctx);
+        let recipient = *vector::borrow(&distributeList, distributeIndex);
+        transfer::public_transfer(_coin, recipient);
+        distributeIndex = distributeIndex + 1;
+    }
+}
+
